@@ -1,14 +1,14 @@
-#include <LowPower.h>
 #include <SevSeg.h>
 #include <HX711.h>
+#include <avr/sleep.h>
 
 // HX711.DOUT	- pin #A1
 // HX711.PD_SCK	- pin #A0
 
 HX711 scale(7, 6);		// parameter "gain" is ommited; the default value 128 is used by the library
 SevSeg sevseg;
-unsigned long long lastChangeTime;
-float lastRememberedWeight;
+unsigned long long lastChangedTime;
+float lastWeight;
 
 
 void setup() {
@@ -22,6 +22,17 @@ void setup() {
 //  Serial.begin(9600);
 }
 
+void powerDownCpu() {
+  ADCSRA &= ~_BV(ADEN);                   // ADC off
+  set_sleep_mode(SLEEP_MODE_PWR_DOWN);    // replaces above statement
+  sleep_enable();                         // Sets the Sleep Enable bit in the MCUCR Register (SE BIT)
+  sleep_cpu();                            // sleep
+}
+
+inline float ABS(float a) {
+  return a >=0 ? a : -a;
+}
+
 void loop() {
   float kg = scale.get_units(1);
 //  Serial.println(kg);
@@ -30,8 +41,15 @@ void loop() {
   while(t > millis()) {
     sevseg.refreshDisplay();
   }
+
+  if (ABS(kg-lastWeight)>1.f) {
+    lastWeight = kg;
+    lastChangedTime = millis();
+  }
+
+  if (lastChangedTime + 15000 < millis()) {
+    scale.power_down();
+    powerDownCpu();
+  }
   
-//  scale.power_down();             // put the ADC in sleep mode
-//  delay(5000);
-//  scale.power_up();
 }
