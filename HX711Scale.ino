@@ -2,9 +2,6 @@
 #include <HX711.h>
 #include <avr/sleep.h>
 
-// HX711.DOUT	- pin #A1
-// HX711.PD_SCK	- pin #A0
-
 HX711 scale(7, 6);		// parameter "gain" is ommited; the default value 128 is used by the library
 SevSeg sevseg;
 unsigned long long lastChangedTime;
@@ -24,9 +21,9 @@ void setup() {
 
 void powerDownCpu() {
   ADCSRA &= ~_BV(ADEN);                   // ADC off
-  set_sleep_mode(SLEEP_MODE_PWR_DOWN);    // replaces above statement
-  sleep_enable();                         // Sets the Sleep Enable bit in the MCUCR Register (SE BIT)
-  sleep_cpu();                            // sleep
+  set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+  sleep_enable();
+  sleep_cpu();
 }
 
 inline float ABS(float a) {
