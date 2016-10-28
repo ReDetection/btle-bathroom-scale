@@ -17,6 +17,16 @@ struct nrf_weight_data {
 };
 nrf_weight_data payload;
 
+void splash() {
+  for(byte i = 9; i > 0; i--) {
+    sevseg.setNumber(i*1111, i % 4);
+    unsigned long long nextFrame = millis() + 200;
+    while(nextFrame > millis()) {
+      sevseg.refreshDisplay();
+    }
+  }
+}
+
 void setup() {
   byte digitPins[] = {14, 17, 18, 8};
   byte segmentPins[] = {15, 19, 4, 21, 5, 16, 3, 20};
@@ -26,6 +36,7 @@ void setup() {
   btle.begin("Scale"); //8 chars max
   payload.service_uuid = 0x181D; // org.bluetooth.service.weight_scale
   scale.set_scale(27477.f);                      // this value is obtained by calibrating the scale with known weights; see the README for details
+  splash();
   scale.tare();				        // reset the scale to 0
 //  Serial.begin(9600);
 }
