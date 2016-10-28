@@ -45,14 +45,16 @@ void loop() {
   float kg = scale.get_units(1);
 //  Serial.println(kg);
   sevseg.setNumber(kg, 1);
-
   payload.value = kg/0.005;
-  btle.advertise(0x16, &payload, sizeof(payload));
-  btle.hopChannel();
-  
-  unsigned long long t = millis() + 1000;
-  while(t > millis()) {
-    sevseg.refreshDisplay();
+
+  for (byte i=0; i<5; i++) {
+    unsigned long long nextAdvertisement = millis() + 100;
+    while(nextAdvertisement > millis()) {
+      sevseg.refreshDisplay();
+    }
+    
+    btle.advertise(0x16, &payload, sizeof(payload));
+    btle.hopChannel();
   }
 
   if (ABS(kg-lastWeight)>1.f) {
