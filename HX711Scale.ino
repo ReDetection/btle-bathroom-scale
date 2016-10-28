@@ -58,7 +58,7 @@ void loop() {
   sevseg.setNumber(kg, 1);
   payload.value = kg/0.005;
 
-  for (byte i=0; i<5; i++) {
+  for (byte i=0; i<3; i++) {
     unsigned long long nextAdvertisement = millis() + 100;
     while(nextAdvertisement > millis()) {
       sevseg.refreshDisplay();
