@@ -75,6 +75,7 @@ void loop() {
 
   if (lastChangedTime + 15000 < millis()) {
     scale.power_down();
+    radio.powerDown();
     powerDownCpu();
   }
   
