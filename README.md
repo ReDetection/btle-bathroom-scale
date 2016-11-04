@@ -4,15 +4,13 @@ Because everything comes better with Bluetooth! 😀
 
 ## Features ##
 
-<ul>
-<li>Can measure up to 120kg of load</li>
-<li>LED indicators make it easy to use in the dark</li>
-<li>Broadcast weight over BTLE (iOS and Android apps available)</li>
-<li>Automatically turns off after 15 seconds</li>
-<li>Can live for years on a single coin battery</li>
-<li>Built on cheap components</li>
-<li>Geek-porn enabled in my case (easy opt out with any tape or plastic thing)</li>
-</ul>
+* Can measure up to 120kg of load
+* LED indicators make it easy to use in the dark
+* Broadcast weight over BTLE ([iOS and Android apps available](https://github.com/ReDetection/weight-receiver-app))
+* Automatically turns off after 15 seconds
+* Can live for years on a single coin battery
+* Built on cheap components
+* Geek-porn enabled in my case (easy opt out with any tape or plastic thing)
 
 ![Result](schematics/result.jpg)
 
